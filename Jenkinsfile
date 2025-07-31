@@ -25,14 +25,14 @@ pipeline {
         stage('Analyze Apache Logs') {
             steps {
                 script {
-                    echo "analize logfile 4xx та 5xx..."
+                    echo "analize logFile 4xx та 5xx..."
                     def logFile = '/var/log/apache2/access.log'
                     def errorCheckScript = """
                         if [ -f ${logFile} ]; then
-                            ERROR_COUNT=\$(sudo egrep ' \\"[45][0-9]{2}\\" ' ${logFile} | wc -l)
+                            ERROR_COUNT=\$(sudo egrep '\" [45][0-9]{2} ' ${logFile} | wc -l)
                             if [ "\$ERROR_COUNT" -gt "0" ]; then
-                                echo "found \$ERROR_COUNT errors (4xx/5xx)."
-                                sudo egrep ' \\"[45][0-9]{2}\\" ' ${logFile}
+                                echo "found \$ERROR_COUNT errors (4xx/5xx):"
+                                sudo egrep '\" [45][0-9]{2} ' ${logFile}
                             else
                                 echo "errors 4xx/5xx not found."
                             fi
